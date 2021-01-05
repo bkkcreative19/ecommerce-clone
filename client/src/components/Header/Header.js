@@ -28,14 +28,18 @@ const Header = () => {
             <li>
               <i class="far fa-user"></i>
             </li>
-            <li>
-              <i class="fas fa-shopping-bag"></i> 0
-            </li>
+            <Link to="/cart">
+              <li>
+                <i class="fas fa-shopping-bag"></i> 0
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
       <div className="nav-logo">
-        <h1>OAK + FORT</h1>
+        <Link to="/">
+          <h1>OAK + FORT</h1>
+        </Link>
       </div>
       <div className="nav-secondary">
         <ul>
@@ -43,10 +47,10 @@ const Header = () => {
             <Link>New</Link>
           </li>
           <li>
-            <Link>Womens</Link>
+            <Link to="/women">Womens</Link>
           </li>
           <li>
-            <Link>Mens</Link>
+            <Link to="/men">Mens</Link>
           </li>
           <li>
             <Link>Sale</Link>

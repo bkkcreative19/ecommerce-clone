@@ -1,0 +1,62 @@
+.products {
+  display: flex;
+}
+
+aside {
+  flex: 0.7;
+}
+
+.main-container {
+  margin-top: 4rem;
+  flex: 3.3;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 10rem;
+}
+
+.main-container header {
+  border-bottom: 1px solid rgba(138, 135, 135, 0.267);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.banner {
+  background: url("https://images.unsplash.com/photo-1426523038054-a260f3ef5bc9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1932&q=80")
+    center no-repeat;
+  background-size: cover;
+  height: 40vh;
+}
+
+.categories {
+  display: flex;
+  margin-top: 4rem;
+  /* margin-bottom: 20rem; */
+  gap: 3rem;
+}
+
+.categorie {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+}
+
+.categorie:hover {
+  text-decoration: underline;
+}
+
+.categorie img {
+  height: 35rem;
+}
+.categorie span {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-top: 2rem;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}

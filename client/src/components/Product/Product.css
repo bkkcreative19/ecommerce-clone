@@ -1,0 +1,26 @@
+.product {
+  height: 80vh;
+  margin-top: 9rem;
+}
+
+.product img {
+  height: 100%;
+  width: 100%;
+}
+
+.name-price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product span {
+  font-size: 1.2rem;
+  margin-top: 1.4rem;
+}
+.product span:nth-child(2) {
+  margin-left: auto;
+}
+
+.product p {
+  margin-top: 1.2rem;
+}
