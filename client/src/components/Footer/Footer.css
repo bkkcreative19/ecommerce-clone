@@ -1,0 +1,30 @@
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10rem;
+}
+
+.footer-container {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+}
+
+.footer-item {
+}
+.footer-item h3 {
+  font-size: 1.6rem;
+}
+.footer-item ul {
+  margin-top: 0.8rem;
+}
+
+.footer-item ul li {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+.footer-item ul li:not(:nth-child(1)) {
+  margin-top: 0.8rem;
+}

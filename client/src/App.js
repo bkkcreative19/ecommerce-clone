@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import NewsLetter from "./components/NewsLetter/NewsLetter";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route exact path="/cart"></Route>
       </Switch>
       <NewsLetter />
+      <Footer />
     </div>
   );
 };
