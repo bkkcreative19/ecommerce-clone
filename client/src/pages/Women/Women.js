@@ -6,7 +6,7 @@ const Women = () => {
   const womenProducts = products.filter(
     (product) => product.gender === "women"
   );
-  console.log(womenProducts);
+
   return (
     <>
       <Products products={womenProducts} />

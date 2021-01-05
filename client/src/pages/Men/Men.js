@@ -4,7 +4,7 @@ import { Context } from "../../context/context";
 const Men = () => {
   const { products } = useContext(Context);
   const menProducts = products.filter((product) => product.gender === "men");
-  console.log(menProducts);
+
   return (
     <>
       <Products products={menProducts} />

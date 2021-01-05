@@ -10,6 +10,7 @@ import NewsLetter from "./components/NewsLetter/NewsLetter";
 import Footer from "./components/Footer/Footer";
 import Men from "./pages/Men/Men";
 import Women from "./pages/Women/Women";
+import ProductPage from "./pages/ProductPage/ProductPage";
 
 const App = () => {
   return (
@@ -26,6 +27,9 @@ const App = () => {
         </Route>
         <Route exact path="/women">
           <Women />
+        </Route>
+        <Route exact path="/:name">
+          <ProductPage />
         </Route>
       </Switch>
       <NewsLetter />

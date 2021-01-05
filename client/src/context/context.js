@@ -22,6 +22,12 @@ const MyContext = ({ children }) => {
     setLatestProducts(latest);
   };
 
+  const fetchProduct = async (name) => {
+    // const product = products.find((product) => product.name === product.name);
+    const { data } = await axios.get(`/api/product/${name}`);
+    return data;
+  };
+
   const addToCart = (product) => {
     const newCart = [...cart];
     newCart.push(product);
@@ -43,6 +49,7 @@ const MyContext = ({ children }) => {
         products,
         cart,
         addToCart,
+        fetchProduct,
       }}
     >
       {children}

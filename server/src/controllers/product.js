@@ -1,3 +1,4 @@
+import { request } from "express";
 import Item from "../models/product.js";
 
 // Get all Products
@@ -35,4 +36,10 @@ const submitProduct = async (req, res) => {
   // res.json(items);
 };
 
-export { fetchProducts, submitProduct };
+const fetchProduct = async (req, res) => {
+  const item = await Item.find({ name: req.params.name });
+  res.json(item);
+  // console.log(req.params.name);
+};
+
+export { fetchProducts, submitProduct, fetchProduct };

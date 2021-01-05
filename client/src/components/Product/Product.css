@@ -1,6 +1,7 @@
 .product {
   height: 80vh;
   margin-top: 9rem;
+  cursor: pointer;
 }
 
 .product img {
