@@ -31,9 +31,15 @@ const MyContext = ({ children }) => {
   const addToCart = (product) => {
     const newCart = [...cart];
     newCart.push(product);
+
     setCart(newCart);
-    console.log(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+  };
+
+  const fetchProductsFromLocalStorage = () => {
+    const data = JSON.parse(localStorage.getItem("cart"));
+    return data;
   };
 
   //   console.log(cart);
@@ -50,6 +56,7 @@ const MyContext = ({ children }) => {
         cart,
         addToCart,
         fetchProduct,
+        fetchProductsFromLocalStorage,
       }}
     >
       {children}

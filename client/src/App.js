@@ -11,6 +11,7 @@ import Footer from "./components/Footer/Footer";
 import Men from "./pages/Men/Men";
 import Women from "./pages/Women/Women";
 import ProductPage from "./pages/ProductPage/ProductPage";
+import Cart from "./pages/Cart/Cart";
 
 const App = () => {
   return (
@@ -21,7 +22,9 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path="/admin"></Route>
-        <Route exact path="/cart"></Route>
+        <Route exact path="/cart">
+          <Cart />
+        </Route>
         <Route exact path="/men">
           <Men />
         </Route>

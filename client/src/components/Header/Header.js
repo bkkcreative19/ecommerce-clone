@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../../context/context";
 import flag from "../../assets/images/0_o0-6o1W1DKmI5LbX.png";
 import "./Header.css";
 
 const Header = () => {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const cartFromStorage = JSON.parse(localStorage.getItem("cart"));
+    setCart(cartFromStorage);
+  }, []);
   return (
     <nav className="nav">
       <div className="nav-promo">
@@ -30,7 +36,7 @@ const Header = () => {
             </li>
             <Link to="/cart">
               <li>
-                <i class="fas fa-shopping-bag"></i> 0
+                <i class="fas fa-shopping-bag"></i> {cart.length}
               </li>
             </Link>
           </ul>

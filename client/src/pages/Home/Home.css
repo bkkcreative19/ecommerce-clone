@@ -43,17 +43,17 @@
   display: none;
 }
 
-.card-1 {
+.card-3 {
   background: url("https://images.unsplash.com/photo-1550614000-4895a10e1bfd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80")
     center no-repeat;
   background-size: cover;
 }
-.card-2 {
+.card-1 {
   background: url("https://images.unsplash.com/photo-1475180098004-ca77a66827be?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=633&q=80")
     center no-repeat;
   background-size: cover;
 }
-.card-3 {
+.card-2 {
   background: url("https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=726&q=80")
     center no-repeat;
   background-size: cover;

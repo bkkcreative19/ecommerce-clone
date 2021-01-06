@@ -5,8 +5,9 @@ import { Context } from "../../context/context";
 import "./ProductPage.css";
 
 const ProductPage = (props) => {
-  const { fetchProduct } = useContext(Context);
+  const { fetchProduct, addToCart } = useContext(Context);
   const [product, setProduct] = useState({});
+  console.log(product);
 
   useEffect(() => {
     const callFunction = async () => {
@@ -66,7 +67,9 @@ const ProductPage = (props) => {
           </div>
         </div>
         <div className="button">
-          <button className="btn">Add to Cart</button>
+          <button onClick={() => addToCart(product)} className="btn">
+            Add to Cart
+          </button>
 
           <span className="heart">
             <i class="fas fa-heart"></i>
