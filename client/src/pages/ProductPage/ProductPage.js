@@ -5,9 +5,23 @@ import { Context } from "../../context/context";
 import "./ProductPage.css";
 
 const ProductPage = (props) => {
-  const { fetchProduct, addToCart } = useContext(Context);
+  const { fetchProduct, cart, setCart, addItemToCart } = useContext(Context);
   const [product, setProduct] = useState({});
-  console.log(product);
+  const [qty, setQty] = useState(1);
+  // product.qty = qty;
+  // console.log(props);
+  // const addToCart = (p) => {
+  //   const newCart = [...cart];
+  //   if (cart.includes(product)) {
+  //     return;
+  //   } else {
+  //     newCart.push(product);
+
+  //     console.log(cart);
+  //   }
+  //   setCart(newCart);
+  //   localStorage.setItem("cart", JSON.stringify(newCart));
+  // };
 
   useEffect(() => {
     const callFunction = async () => {
@@ -49,7 +63,7 @@ const ProductPage = (props) => {
           </div>
           <a href="#">Size Guide</a>
         </div>
-        <div className="shippingOptions">
+        {/* <div className="shippingOptions">
           <div>
             <input type="radio" id="huey" name="drone" value="huey" checked />
             <label for="huey">
@@ -65,14 +79,22 @@ const ProductPage = (props) => {
               <span>Select Store to check availability.</span>
             </label>
           </div>
-        </div>
+        </div> */}
+        <select value={qty} onChange={(e) => setQty(e.target.value)}>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
         <div className="button">
-          <button onClick={() => addToCart(product)} className="btn">
+          <button
+            onClick={() => addItemToCart(product._id, qty)}
+            className="btn"
+          >
             Add to Cart
           </button>
 
           <span className="heart">
-            <i class="fas fa-heart"></i>
+            <i className="fas fa-heart"></i>
           </span>
         </div>
         <a className="inv" href="#">

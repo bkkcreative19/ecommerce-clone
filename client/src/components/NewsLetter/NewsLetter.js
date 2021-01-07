@@ -10,16 +10,16 @@ const NewsLetter = () => {
         <button className="btn">Subscribe</button>
         <ul className="social-icons">
           <li className="social-icon">
-            <i class="fab fa-facebook-square"></i>
+            <i className="fab fa-facebook-square"></i>
           </li>
           <li className="social-icon">
-            <i class="fab fa-instagram"></i>
+            <i className="fab fa-instagram"></i>
           </li>
           <li className="social-icon">
-            <i class="fab fa-tiktok"></i>
+            <i className="fab fa-tiktok"></i>
           </li>
           <li className="social-icon">
-            <i class="fab fa-pinterest"></i>
+            <i className="fab fa-pinterest"></i>
           </li>
         </ul>
       </div>

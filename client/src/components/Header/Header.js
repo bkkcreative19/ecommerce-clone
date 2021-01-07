@@ -1,19 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/context";
-import flag from "../../assets/images/0_o0-6o1W1DKmI5LbX.png";
+// import { Context } from "../../context/context";
+// import flag from "../../assets/images/0_o0-6o1W1DKmI5LbX.png";
 import "./Header.css";
 
 const Header = () => {
-  const [cart, setCart] = useState([]);
-  useEffect(() => {
-    const cartFromStorage = JSON.parse(localStorage.getItem("cart"));
-    setCart(cartFromStorage);
-  }, []);
+  // const [cart, setCart] = useState([]);
+  const { cart } = useContext(Context);
+  // const [numberInCart, setNumberInCart] = useState(0);
+  // useEffect(() => {
+  //   const cartFromStorage = JSON.parse(localStorage.getItem("cart"));
+  //   setCart(cartFromStorage);
+  // }, []);
+
+  // useEffect(() => {
+  //   setNumberInCart(cart.length);
+  // }, [cart]);
   return (
     <nav className="nav">
       <div className="nav-promo">
-        <Link>FREE DOMESTIC SHIPPING ON ORDERS OVER $150</Link>
+        <Link to="dome">FREE DOMESTIC SHIPPING ON ORDERS OVER $150</Link>
       </div>
       <div className="nav-main">
         <div className="nav-main-left">
@@ -21,7 +28,7 @@ const Header = () => {
             <li></li>
             <span>USA($USD)</span>
             <li>
-              <i class="fas fa-map-marker-alt"></i>
+              <i className="fas fa-map-marker-alt"></i>
             </li>
             <li>Order Status</li>
           </ul>
@@ -29,14 +36,14 @@ const Header = () => {
         <div className="nav-main-right">
           <ul>
             <li>
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
             </li>
             <li>
-              <i class="far fa-user"></i>
+              <i className="far fa-user"></i>
             </li>
             <Link to="/cart">
               <li>
-                <i class="fas fa-shopping-bag"></i> {cart.length}
+                <i className="fas fa-shopping-bag"></i> {cart ? cart.length : 0}
               </li>
             </Link>
           </ul>
@@ -44,13 +51,13 @@ const Header = () => {
       </div>
       <div className="nav-logo">
         <Link to="/">
-          <h1>OAK + FORT</h1>
+          <h1>OAK + FORTS</h1>
         </Link>
       </div>
       <div className="nav-secondary">
         <ul>
           <li>
-            <Link>New</Link>
+            <Link to="new">New</Link>
           </li>
           <li>
             <Link to="/women">Womens</Link>
@@ -59,19 +66,19 @@ const Header = () => {
             <Link to="/men">Mens</Link>
           </li>
           <li>
-            <Link>Sale</Link>
+            <Link to="/sale">Sale</Link>
           </li>
           <li>
-            <Link>Jewelry</Link>
+            <Link to="/jewlery">Jewelry</Link>
           </li>
           <li>
-            <Link>Lifestyle</Link>
+            <Link to="/lifestyle">Lifestyle</Link>
           </li>
           <li>
-            <Link>Loungewear</Link>
+            <Link to="/loungewear">Loungewear</Link>
           </li>
           <li>
-            <Link>Shop Instagram</Link>
+            <Link to="/instagram">Shop Instagram</Link>
           </li>
         </ul>
       </div>
