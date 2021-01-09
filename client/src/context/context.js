@@ -12,8 +12,9 @@ const MyContext = ({ children }) => {
     setProducts(data);
   };
 
-  const addItemToCart = (id, qty) => {
+  const addItemToCart = (id, qty, props) => {
     const inCartAlready = cart.find((item) => item._id === id);
+
     if (inCartAlready) {
       alert("already in cart");
       return;
@@ -36,14 +37,26 @@ const MyContext = ({ children }) => {
     return data;
   };
 
-  const fetchProductsFromLocalStorage = () => {
-    const data = JSON.parse(localStorage.getItem("cart"));
-    return data;
+  const setLocalStorage = () => {
+    if (!JSON.parse(localStorage.getItem("cart"))) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCart(JSON.parse(localStorage.getItem("cart")));
+    } else {
+      setCart(JSON.parse(localStorage.getItem("cart")));
+    }
   };
+
+  // const fetchProductsFromLocalStorage = () => {
+  //   const data = JSON.parse(localStorage.getItem("cart"));
+  //   return data;
+  // };
 
   useEffect(() => {
     fetchProducts();
   }, []);
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <Context.Provider
@@ -52,7 +65,7 @@ const MyContext = ({ children }) => {
         cart,
         setCart,
         fetchProduct,
-        fetchProductsFromLocalStorage,
+        // fetchProductsFromLocalStorage,
         addItemToCart,
         removeProductFromCart,
       }}

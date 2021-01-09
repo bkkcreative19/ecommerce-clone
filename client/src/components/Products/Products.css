@@ -60,3 +60,72 @@ aside {
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
 }
+
+.card {
+  margin: 1rem 0;
+  overflow: hidden;
+  height: 50px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.card .question {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: #bbb4b4 solid 1px;
+}
+
+.fa-chevron-down {
+  cursor: pointer;
+}
+
+.answer {
+  margin-top: 1rem;
+}
+
+.zoom {
+  height: 100px;
+}
+
+.fa-chevron-down {
+  font-size: 1.5rem;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  position: relative;
+}
+
+/* .fa-chevron-up:hover {
+  color: red;
+  -webkit-transform: scale(2) rotate(180deg);
+  transform: scale(2) rotate(180deg);
+} */
+
+h4,
+p {
+  color: #787887;
+}
+
+.filter-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Collapsible {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.Collapsible ul {
+  margin-top: 1.5rem;
+}
+
+.filter-head {
+  border-bottom: 1px solid rgba(104, 103, 103, 0.233);
+  padding-bottom: 1.5rem;
+}

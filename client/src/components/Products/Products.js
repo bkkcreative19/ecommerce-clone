@@ -1,13 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { withRouter } from "react-router-dom";
 import Product from "../Product/Product";
+import Collapsible from "react-collapsible";
+import InputRange from "react-input-range";
 import "./Products.css";
 
 const Products = (props) => {
-  //
+  const [value, setValue] = useState({ min: 2, max: 10 });
   return (
     <div className="products">
-      <aside>lhiibjo</aside>
+      <aside className="filter">
+        <Collapsible
+          trigger={
+            <div className="filter-head">
+              <h3>Filters</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          }
+        >
+          <InputRange
+            formatLabel={(value) => `${value}cm`}
+            maxValue={20}
+            minValue={0}
+            value={value}
+            onChange={(value) => setValue({ value })}
+          />
+        </Collapsible>
+      </aside>
       <div className="main-container">
         <header>
           <h3>
