@@ -12,8 +12,6 @@ const Product = ({ product }) => {
         <span>{product.name}</span>
         <span>${product.price}</span>
       </div>
-
-      <p>4 colors available</p>
     </div>
   );
 };

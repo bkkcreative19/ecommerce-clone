@@ -59,7 +59,7 @@ const Header = () => {
       <div className="nav-secondary">
         <ul>
           <li>
-            <Link to="new">New</Link>
+            <Link to="/new">New</Link>
           </li>
           <li>
             <Link to="/women">Womens</Link>
@@ -68,19 +68,16 @@ const Header = () => {
             <Link to="/men">Mens</Link>
           </li>
           <li>
-            <Link to="/sale">Sale</Link>
+            <Link to="/shoes">Shoes</Link>
           </li>
           <li>
-            <Link to="/jewlery">Jewelry</Link>
+            <Link to="/jewelry">Jewelry</Link>
           </li>
           <li>
-            <Link to="/lifestyle">Lifestyle</Link>
+            <Link to="/electronics">Electronics</Link>
           </li>
           <li>
-            <Link to="/loungewear">Loungewear</Link>
-          </li>
-          <li>
-            <Link to="/instagram">Shop Instagram</Link>
+            <Link to="/beauty">Beauty</Link>
           </li>
         </ul>
       </div>

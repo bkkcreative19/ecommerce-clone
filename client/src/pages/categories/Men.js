@@ -3,7 +3,7 @@ import Products from "../../components/Products/Products";
 import { Context } from "../../context/context";
 const Men = () => {
   const { products } = useContext(Context);
-  const menProducts = products.filter((product) => product.gender === "men");
+  const menProducts = products.filter((product) => product.category === "men");
 
   return (
     <>

@@ -5,7 +5,7 @@ const Women = () => {
   const { products } = useContext(Context);
 
   const womenProducts = products.filter(
-    (product) => product.gender === "women"
+    (product) => product.category === "women"
   );
 
   return (
