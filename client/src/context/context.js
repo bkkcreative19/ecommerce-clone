@@ -5,11 +5,13 @@ const Context = React.createContext("light");
 
 const MyContext = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const intialCart = JSON.parse(localStorage.getItem("cart"));
+  const [cart, setCart] = useState(intialCart);
 
-  const fetchProducts = async () => {
-    const { data } = await axios.get("/api/products");
+  const fetchProducts = async (path) => {
+    const { data } = await axios.get(`/api/products`);
     setProducts(data);
+    // return data;
   };
 
   const addItemToCart = (id, qty, props) => {
@@ -37,26 +39,13 @@ const MyContext = ({ children }) => {
     return data;
   };
 
-  const setLocalStorage = () => {
-    if (!JSON.parse(localStorage.getItem("cart"))) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-      setCart(JSON.parse(localStorage.getItem("cart")));
-    } else {
-      setCart(JSON.parse(localStorage.getItem("cart")));
-    }
-  };
-
-  // const fetchProductsFromLocalStorage = () => {
-  //   const data = JSON.parse(localStorage.getItem("cart"));
-  //   return data;
-  // };
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
-  // useEffect(() => {
-
-  // }, []);
 
   return (
     <Context.Provider
@@ -65,7 +54,6 @@ const MyContext = ({ children }) => {
         cart,
         setCart,
         fetchProduct,
-        // fetchProductsFromLocalStorage,
         addItemToCart,
         removeProductFromCart,
       }}

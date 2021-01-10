@@ -59,12 +59,12 @@ const OrderSummary = ({ cart }) => {
           <p>Sign Up</p>
           <p>Checkout as Guest</p>
         </div>
-        {/* <form>
+        <form>
           <input type="text" placeholder="Enter email address" />
           <input type="password" placeholder="Enter password" />
           <button className="btn">Log in and proceed to Checkout</button>
           <span>Forgot Password?</span>
-        </form> */}
+        </form>
       </div>
       <button className="paypal-btn">
         <img

@@ -38,9 +38,11 @@ const Header = () => {
             <li>
               <i className="fas fa-search"></i>
             </li>
-            <li>
-              <i className="far fa-user"></i>
-            </li>
+            <Link to="/login">
+              <li>
+                <i className="far fa-user"></i>
+              </li>
+            </Link>
             <Link to="/cart">
               <li>
                 <i className="fas fa-shopping-bag"></i> {cart ? cart.length : 0}

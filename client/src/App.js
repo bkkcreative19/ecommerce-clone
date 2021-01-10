@@ -11,6 +11,8 @@ import Men from "./pages/Men/Men";
 import Women from "./pages/Women/Women";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import Cart from "./pages/Cart/Cart";
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
 
 const App = () => {
   return (
@@ -21,6 +23,12 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path="/admin"></Route>
+        {/* <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/sign-up">
+          <SignUp />
+        </Route> */}
         <Route exact path="/cart">
           <Cart />
         </Route>
