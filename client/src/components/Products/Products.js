@@ -12,10 +12,10 @@ const Products = (props) => {
     Math.trunc(Math.max(...props.products.map((product) => product.price))) + 1
   );
   const [filterProducts, setFilterProducts] = useState([]);
+  const [sortBy, setSortBy] = useState("price");
 
-  const handleChange = (e) => {
-    setPrice(e.target.value);
-  };
+  console.log(sortBy);
+  console.log(price);
 
   useEffect(() => {
     const stuff = props.products.filter((item) => item.price < price);
@@ -38,10 +38,23 @@ const Products = (props) => {
             }
             id="price"
             value={price}
-            onChange={handleChange}
+            onChange={(e) => setPrice(e.target.value)}
             className="form-control"
           />
         </div>
+        {/* <div className="form-group">
+          <label htmlFor="capacity">Sort By</label>
+          <select
+            name="capacity"
+            id="capacity"
+            value={sortBy}
+            className="form-control"
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="hi">hi</option>
+            <option value="hi2">hi2</option>
+          </select>
+        </div> */}
       </aside>
       <div className="main-container">
         <header>
