@@ -5,6 +5,10 @@ const Context = React.createContext("light");
 
 const MyContext = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined,
+  });
   const intialCart = JSON.parse(localStorage.getItem("cart"));
   const [cart, setCart] = useState(intialCart);
 
@@ -15,6 +19,7 @@ const MyContext = ({ children }) => {
   };
 
   const addItemToCart = (id, qty, props) => {
+    if (!cart) return;
     const inCartAlready = cart.find((item) => item._id === id);
 
     if (inCartAlready) {
@@ -47,6 +52,54 @@ const MyContext = ({ children }) => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      // console.log(token);
+      const res = await axios.post("/api/users/tokenIsValid", null, {
+        headers: { "x-auth-token": token },
+      });
+
+      if (token) {
+        const { data } = await axios.get("/api/users/profile", {
+          headers: { "x-auth-token": token },
+        });
+
+        setUserData({
+          token: token,
+          user: data,
+        });
+      }
+    };
+    // console.log(userData);
+
+    checkLoggedIn();
+  }, []);
+
+  const logOut = () => {
+    setUserData({
+      token: undefined,
+      user: undefined,
+    });
+    localStorage.setItem("auth-token", "");
+  };
+  const login = async (email, password) => {
+    const res = await axios.post(
+      "/api/users/signin",
+      {
+        email: email,
+        password: password,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    //  localStorage.setItem("auth-token", );
+    console.log(res);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -56,6 +109,10 @@ const MyContext = ({ children }) => {
         fetchProduct,
         addItemToCart,
         removeProductFromCart,
+        userData,
+        setUserData,
+        logOut,
+        login,
       }}
     >
       {children}

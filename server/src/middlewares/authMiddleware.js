@@ -1,35 +1,27 @@
 import jwt from "jsonwebtoken";
 import AsyncHandler from "express-async-handler";
-import User from "../models/user.js";
+// import User from "../models/user.js";
 
-const protect = AsyncHandler(async (req, res, next) => {
-  let token;
+const auth = (req, res, next) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token)
+      return res
+        .status(401)
+        .json({ msg: "No authentication token, authorization denied." });
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      token = req.headers.authorization.split(" ")[1];
+    const verified = jwt.verify(token, "adnbfoesrte24fds");
+    if (!verified)
+      return res
+        .status(401)
+        .json({ msg: "Token verification failed, authorization denied." });
 
-      const decoded = jwt.verify(token, "adnbfoesrte24fds");
-
-      req.user = await User.findById(decoded.id).select("-password");
-      next();
-    } catch (err) {
-      console.error(err);
-
-      res.status(401);
-      throw new Error("Not authorized, token failed");
-    }
+    // console.log(verified);
+    req.user = verified.userId;
+    next();
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
+};
 
-  if (!token) {
-    res.status(401);
-    throw new Error("Not authorized, no token");
-  }
-
-  next();
-});
-
-export { protect };
+export { auth };

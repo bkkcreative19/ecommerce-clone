@@ -14,9 +14,6 @@ const Products = (props) => {
   const [filterProducts, setFilterProducts] = useState([]);
   const [sortBy, setSortBy] = useState("price");
 
-  console.log(sortBy);
-  console.log(price);
-
   useEffect(() => {
     const stuff = props.products.filter((item) => item.price < price);
     setFilterProducts(stuff);

@@ -1,111 +1,156 @@
-import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
 import User from "../models/user.js";
-
-// @desc    Auth user & get token
-// @route   POST /api/users/login
-// @access  Public
-const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (user && (await user.matchPassword(password))) {
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import createJWT from "../utils/auth.js";
+const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const signup = (req, res, next) => {
+  let { name, email, password, password_confirmation } = req.body;
+  let errors = [];
+  if (!name) {
+    errors.push({ name: "required" });
+  }
+  if (!email) {
+    errors.push({ email: "required" });
+  }
+  if (!emailRegexp.test(email)) {
+    errors.push({ email: "invalid" });
+  }
+  if (!password) {
+    errors.push({ password: "required" });
+  }
+  if (!password_confirmation) {
+    errors.push({
+      password_confirmation: "required",
+    });
+  }
+  if (password != password_confirmation) {
+    errors.push({ password: "mismatch" });
+  }
+  if (errors.length > 0) {
+    return res.status(422).json({ errors: errors });
+  }
+  User.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        return res
+          .status(422)
+          .json({ errors: [{ user: "email already exists" }] });
+      } else {
+        const user = new User({
+          name: name,
+          email: email,
+          password: password,
+        });
+        bcrypt.genSalt(10, function (err, salt) {
+          bcrypt.hash(password, salt, function (err, hash) {
+            if (err) throw err;
+            user.password = hash;
+            user
+              .save()
+              .then((response) => {
+                res.status(200).json({
+                  success: true,
+                  result: response,
+                });
+              })
+              .catch((err) => {
+                res.status(500).json({
+                  errors: [{ error: err }],
+                });
+              });
+          });
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errors: [{ error: "Something went wrong" }],
+      });
+    });
+};
+const getProfile = async (req, res, next) => {
+  // console.log(req.user);
+  const user = await User.findById(req.user);
+  if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
     });
   } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
+    res.status(404);
+    throw new Error("User not found");
   }
-});
-
-const hi = (req, res) => {
-  res.send(process.env.JWT_SECRET);
+  // // res.send("hi");
+};
+const signin = (req, res) => {
+  let { email, password } = req.body;
+  let errors = [];
+  if (!email) {
+    errors.push({ email: "required" });
+  }
+  if (!emailRegexp.test(email)) {
+    errors.push({ email: "invalid email" });
+  }
+  if (!password) {
+    errors.push({ passowrd: "required" });
+  }
+  if (errors.length > 0) {
+    return res.status(422).json({ errors: errors });
+  }
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          errors: [{ user: "not found" }],
+        });
+      } else {
+        bcrypt
+          .compare(password, user.password)
+          .then((isMatch) => {
+            if (!isMatch) {
+              return res
+                .status(400)
+                .json({ errors: [{ password: "incorrect" }] });
+            }
+            let access_token = createJWT(user.email, user._id, 3600);
+            jwt.verify(access_token, "adnbfoesrte24fds", (err, decoded) => {
+              if (err) {
+                res.status(500).json({ erros: err });
+              }
+              if (decoded) {
+                return res.status(200).json({
+                  success: true,
+                  token: access_token,
+                  message: user,
+                });
+              }
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({ erros: err });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ erros: err });
+    });
 };
 
-// @desc    Register a new user
-// @route   POST /api/users
-// @access  Public
-const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+const isValid = async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
 
-  const userExists = await User.findOne({ email });
+    const verified = jwt.verify(token, "adnbfoesrte24fds");
+    if (!verified) return res.json(false);
 
-  if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
-  }
+    const user = await User.findById(verified.userId);
+    if (!user) return res.json(false);
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-  });
+    return res.json(true);
+  } catch (err) {}
+};
 
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(400);
-    throw new Error("Invalid user data");
-  }
-});
-
-// @desc    Get user profile
-// @route   GET /api/users/profile
-// @access  Private
-const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  if (user) {
-    return res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
-});
-
-// @desc    Update user profile
-// @route   PUT /api/users/profile
-// @access  Private
-const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id),
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
-});
-
-export { authUser, getUserProfile, registerUser, updateUserProfile, hi };
+export { signin, signup, getProfile, isValid };

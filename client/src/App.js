@@ -1,7 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import "./App.css";
-
 import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
@@ -17,6 +15,7 @@ import Shoes from "./pages/categories/Sale";
 import Electronics from "./pages/categories/Electronics";
 import Jewelry from "./pages/categories/Jewelry";
 import Beauty from "./pages/categories/Beauty";
+import axios from "axios";
 
 const App = () => {
   return (
@@ -27,12 +26,12 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path="/admin"></Route>
-        {/* <Route exact path="/login">
+        <Route exact path="/login">
           <Login />
         </Route>
         <Route exact path="/sign-up">
           <SignUp />
-        </Route> */}
+        </Route>
         <Route exact path="/cart">
           <Cart />
         </Route>

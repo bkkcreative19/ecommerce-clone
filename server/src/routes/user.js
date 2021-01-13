@@ -1,20 +1,9 @@
 import express from "express";
-
-import {
-  authUser,
-  getUserProfile,
-  registerUser,
-  updateUserProfile,
-  hi,
-} from "../controllers/user.js";
-import { protect } from "../middlewares/authMiddleware.js";
+import { auth } from "../middlewares/authMiddleware.js";
 const router = express.Router();
-
-router.post("/", registerUser);
-router.post("/login", authUser);
-router
-  .route("/profile")
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
-
+import { signup, signin, getProfile, isValid } from "../controllers/user.js";
+router.post("/signup", signup);
+router.post("/signin", signin);
+router.get("/profile", auth, getProfile);
+router.post("/tokenIsValid", isValid);
 export default router;

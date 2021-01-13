@@ -12,19 +12,19 @@ const Home = () => {
           <div className="card-1 card">
             <span className="shop">Shop Now</span>
             <p className="likes">
-              <i class="far fa-heart"></i> 10234 Likes
+              <i className="far fa-heart"></i> 10234 Likes
             </p>
           </div>
           <div className="card-2 card">
             <span className="shop">Shop Now</span>
             <p className="likes">
-              <i class="far fa-heart"></i> 10234 Likes
+              <i className="far fa-heart"></i> 10234 Likes
             </p>
           </div>
           <div className="card-3 card">
             <span className="shop">Shop Now</span>
             <p className="likes">
-              <i class="far fa-heart"></i> 10234 Likes
+              <i className="far fa-heart"></i> 10234 Likes
             </p>
           </div>
         </div>

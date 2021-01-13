@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Context } from "../../context/context";
 // import { Context } from "../../context/context";
 // import flag from "../../assets/images/0_o0-6o1W1DKmI5LbX.png";
@@ -7,7 +7,8 @@ import "./Header.css";
 
 const Header = () => {
   // const [cart, setCart] = useState([]);
-  const { cart } = useContext(Context);
+  const { cart, userData, logOut } = useContext(Context);
+  // console.log(userData);
   // const [numberInCart, setNumberInCart] = useState(0);
   // useEffect(() => {
   //   const cartFromStorage = JSON.parse(localStorage.getItem("cart"));
@@ -38,11 +39,23 @@ const Header = () => {
             <li>
               <i className="fas fa-search"></i>
             </li>
-            <Link to="/login">
-              <li>
-                <i className="far fa-user"></i>
-              </li>
-            </Link>
+
+            <li>
+              {userData.user ? (
+                <button onClick={logOut}>Log Out</button>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <button>Log In</button>
+                  </Link>
+                  <Link to="/sign-up">
+                    <button>Register</button>
+                  </Link>
+                </>
+              )}
+              {/* <i className="far fa-user"></i> */}
+            </li>
+
             <Link to="/cart">
               <li>
                 <i className="fas fa-shopping-bag"></i> {cart ? cart.length : 0}
@@ -85,4 +98,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
