@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import NewsLetter from "./components/NewsLetter/NewsLetter";
 import Footer from "./components/Footer/Footer";
-import Men from "./pages/categories/Men";
-import Women from "./pages/categories/Women";
+import Men from "./pages/Categories/Men";
+import Women from "./pages/Categories/Women";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import Cart from "./pages/Cart/Cart";
-import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
-import Shoes from "./pages/categories/Sale";
-import Electronics from "./pages/categories/Electronics";
-import Jewelry from "./pages/categories/Jewelry";
-import Beauty from "./pages/categories/Beauty";
-import axios from "axios";
+import Shoes from "./pages/Categories/Sale";
+import Electronics from "./pages/Categories/Electronics";
+import Jewelry from "./pages/Categories/Jewelry";
+import Beauty from "./pages/Categories/Beauty";
+import Auth from "./pages/Auth/Auth";
+import Profile from "./pages/Profile/Profile";
+import { Context } from "./context/context";
 
 const App = () => {
+  const { userData, getProfile, profile } = useContext(Context);
+  console.log(profile);
+  useEffect(() => {
+    getProfile(localStorage.getItem("auth-token"));
+  }, []);
   return (
     <div>
       <Header />
@@ -26,11 +31,11 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path="/admin"></Route>
-        <Route exact path="/login">
-          <Login />
+        <Route exact path="/auth">
+          <Auth />
         </Route>
-        <Route exact path="/sign-up">
-          <SignUp />
+        <Route exact path="/profile">
+          <Profile />
         </Route>
         <Route exact path="/cart">
           <Cart />

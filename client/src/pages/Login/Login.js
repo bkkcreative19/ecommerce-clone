@@ -5,7 +5,6 @@ import { Context } from "../../context/context";
 import "./Login.css";
 
 const Login = (props) => {
-  const {} = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = async (e) => {

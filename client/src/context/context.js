@@ -9,13 +9,39 @@ const MyContext = ({ children }) => {
     token: undefined,
     user: undefined,
   });
+  const [profile, setProfile] = useState({});
   const intialCart = JSON.parse(localStorage.getItem("cart"));
   const [cart, setCart] = useState(intialCart);
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      const res = await axios.post("/api/users/tokenIsValid", null, {
+        headers: { "x-auth-token": token },
+      });
+
+      if (token) {
+        const { data } = await axios.get("/api/users/profile", {
+          headers: { "x-auth-token": token },
+        });
+
+        setUserData({
+          token: token,
+          user: data,
+        });
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   const fetchProducts = async (path) => {
     const { data } = await axios.get(`/api/products`);
     setProducts(data);
-    // return data;
   };
 
   const addItemToCart = (id, qty, props) => {
@@ -31,6 +57,7 @@ const MyContext = ({ children }) => {
       setCart([...cart, ...data]);
     }
   };
+
   const removeProductFromCart = (id) => {
     if (window.confirm("Do you want to delete this product")) {
       const newCart = [...cart];
@@ -52,40 +79,14 @@ const MyContext = ({ children }) => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      let token = localStorage.getItem("auth-token");
-      if (token === null) {
-        localStorage.setItem("auth-token", "");
-        token = "";
-      }
-      // console.log(token);
-      const res = await axios.post("/api/users/tokenIsValid", null, {
-        headers: { "x-auth-token": token },
-      });
-
-      if (token) {
-        const { data } = await axios.get("/api/users/profile", {
-          headers: { "x-auth-token": token },
-        });
-
-        setUserData({
-          token: token,
-          user: data,
-        });
-      }
-    };
-    // console.log(userData);
-
-    checkLoggedIn();
-  }, []);
-
-  const logOut = () => {
+  const logOut = (props) => {
     setUserData({
       token: undefined,
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
+    props.history.push("/");
+    window.location.reload();
   };
   const login = async (email, password) => {
     const res = await axios.post(
@@ -96,8 +97,14 @@ const MyContext = ({ children }) => {
       },
       { headers: { "Content-Type": "application/json" } }
     );
-    //  localStorage.setItem("auth-token", );
-    console.log(res);
+  };
+
+  const getProfile = async (token) => {
+    const { data } = await axios.get("/api/users/profile", {
+      headers: { "x-auth-token": token },
+    });
+
+    setProfile(data);
   };
 
   return (
@@ -113,6 +120,8 @@ const MyContext = ({ children }) => {
         setUserData,
         logOut,
         login,
+        getProfile,
+        profile,
       }}
     >
       {children}

@@ -1,27 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Context } from "../../context/context";
-// import { Context } from "../../context/context";
-// import flag from "../../assets/images/0_o0-6o1W1DKmI5LbX.png";
 import "./Header.css";
 
 const Header = () => {
-  // const [cart, setCart] = useState([]);
-  const { cart, userData, logOut } = useContext(Context);
-  // console.log(userData);
-  // const [numberInCart, setNumberInCart] = useState(0);
-  // useEffect(() => {
-  //   const cartFromStorage = JSON.parse(localStorage.getItem("cart"));
-  //   setCart(cartFromStorage);
-  // }, []);
+  const { cart, profile } = useContext(Context);
 
-  // useEffect(() => {
-  //   setNumberInCart(cart.length);
-  // }, [cart]);
+  const token = localStorage.getItem("auth-token");
+
   return (
     <nav className="nav">
       <div className="nav-promo">
-        <Link to="dome">FREE DOMESTIC SHIPPING ON ORDERS OVER $150</Link>
+        <Link to="#">FREE DOMESTIC SHIPPING ON ORDERS OVER $150</Link>
       </div>
       <div className="nav-main">
         <div className="nav-main-left">
@@ -41,19 +31,9 @@ const Header = () => {
             </li>
 
             <li>
-              {userData.user ? (
-                <button onClick={logOut}>Log Out</button>
-              ) : (
-                <>
-                  <Link to="/login">
-                    <button>Log In</button>
-                  </Link>
-                  <Link to="/sign-up">
-                    <button>Register</button>
-                  </Link>
-                </>
-              )}
-              {/* <i className="far fa-user"></i> */}
+              <Link to={token ? "/profile" : "/auth"}>
+                <i className="far fa-user"></i> {profile.name}
+              </Link>
             </li>
 
             <Link to="/cart">
