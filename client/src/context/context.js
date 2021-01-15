@@ -5,43 +5,13 @@ const Context = React.createContext("light");
 
 const MyContext = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [userData, setUserData] = useState({
-    token: undefined,
-    user: undefined,
-  });
   const [profile, setProfile] = useState({});
   const intialCart = JSON.parse(localStorage.getItem("cart"));
   const [cart, setCart] = useState(intialCart);
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      let token = localStorage.getItem("auth-token");
-      if (token === null) {
-        localStorage.setItem("auth-token", "");
-        token = "";
-      }
-      const res = await axios.post("/api/users/tokenIsValid", null, {
-        headers: { "x-auth-token": token },
-      });
-
-      if (token) {
-        const { data } = await axios.get("/api/users/profile", {
-          headers: { "x-auth-token": token },
-        });
-
-        setUserData({
-          token: token,
-          user: data,
-        });
-      }
-    };
-
-    checkLoggedIn();
-  }, []);
-
-  const fetchProducts = async (path) => {
-    const { data } = await axios.get(`/api/products`);
-    setProducts(data);
+  const fetchProductsByCategory = async (path) => {
+    const { data } = await axios.get(`/api/products/${path}`);
+    return data;
   };
 
   const addItemToCart = (id, qty, props) => {
@@ -60,9 +30,8 @@ const MyContext = ({ children }) => {
 
   const removeProductFromCart = (id) => {
     if (window.confirm("Do you want to delete this product")) {
-      const newCart = [...cart];
-      const hi = newCart.filter((item) => item._id !== id);
-      setCart(hi);
+      const newCart = cart.filter((item) => item._id !== id);
+      setCart(newCart);
     }
   };
 
@@ -75,15 +44,7 @@ const MyContext = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const logOut = (props) => {
-    setUserData({
-      token: undefined,
-      user: undefined,
-    });
     localStorage.setItem("auth-token", "");
     props.history.push("/");
     window.location.reload();
@@ -111,17 +72,17 @@ const MyContext = ({ children }) => {
     <Context.Provider
       value={{
         products,
+        setProducts,
         cart,
         setCart,
         fetchProduct,
         addItemToCart,
         removeProductFromCart,
-        userData,
-        setUserData,
         logOut,
         login,
         getProfile,
         profile,
+        fetchProductsByCategory,
       }}
     >
       {children}

@@ -8,16 +8,42 @@ import "./Products.css";
 import { Context } from "../../context/context";
 
 const Products = (props) => {
-  const [price, setPrice] = useState(
-    Math.trunc(Math.max(...props.products.map((product) => product.price))) + 1
+  const { fetchProductsByCategory, products, setProducts } = useContext(
+    Context
   );
+  // const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const callFunction = async () => {
+      const resProducts = await fetchProductsByCategory(
+        props.match.params.name
+      );
+      setProducts(resProducts);
+    };
+    callFunction();
+  }, [props.match.params.name]);
+  const [price, setPrice] = useState(
+    1000
+    // Math.trunc(Math.max(...products.map((product) => product.price))) + 1
+  );
+  // const [maxPrice, setMaxPrice] = useState(
+  //   Math.trunc(Math.max(...products.map((product) => product.price))) + 1
+  // );
   const [filterProducts, setFilterProducts] = useState([]);
   const [sortBy, setSortBy] = useState("price");
 
   useEffect(() => {
-    const stuff = props.products.filter((item) => item.price < price);
+    const stuff = products.filter((item) => item.price < price);
     setFilterProducts(stuff);
-  }, [price]);
+  }, [price, products]);
+
+  // useEffect(() => {
+  //   const calculateMaxPrice = () => {
+  //     return (
+  //       Math.trunc(Math.max(...products.map((product) => product.price))) + 1
+  //     );
+  //   };
+  // }, []);
 
   return (
     <div className="products">
@@ -28,11 +54,7 @@ const Products = (props) => {
             type="range"
             name="price"
             min={0}
-            max={
-              Math.trunc(
-                Math.max(...props.products.map((product) => product.price))
-              ) + 1
-            }
+            max={1000}
             id="price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}

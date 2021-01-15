@@ -6,6 +6,11 @@ const fetchProducts = async (req, res) => {
   const items = await Item.find({});
   res.json(items);
 };
+const fetchProductsByCategory = async (req, res) => {
+  const items = await Item.find({ category: req.params.category });
+  // console.log(req.params.category);
+  res.json(items);
+};
 
 const submitProduct = async (req, res) => {
   const { name, price, imgUrl, gender } = req.body;
@@ -42,4 +47,4 @@ const fetchProduct = async (req, res) => {
   // console.log(req.params.name);
 };
 
-export { fetchProducts, submitProduct, fetchProduct };
+export { fetchProducts, submitProduct, fetchProduct, fetchProductsByCategory };

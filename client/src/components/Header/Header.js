@@ -55,22 +55,22 @@ const Header = () => {
             <Link to="/new">New</Link>
           </li>
           <li>
-            <Link to="/women">Womens</Link>
+            <Link to="/category/women">Womens</Link>
           </li>
           <li>
-            <Link to="/men">Mens</Link>
+            <Link to="/category/men">Mens</Link>
           </li>
           <li>
-            <Link to="/shoes">Shoes</Link>
+            <Link to="/category/shoes">Shoes</Link>
           </li>
           <li>
-            <Link to="/jewelry">Jewelry</Link>
+            <Link to="/category/jewelry">Jewelry</Link>
           </li>
           <li>
-            <Link to="/electronics">Electronics</Link>
+            <Link to="/category/electronics">Electronics</Link>
           </li>
           <li>
-            <Link to="/beauty">Beauty</Link>
+            <Link to="/category/beauty">Beauty</Link>
           </li>
         </ul>
       </div>
